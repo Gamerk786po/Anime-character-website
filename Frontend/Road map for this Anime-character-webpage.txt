@@ -1,0 +1,26 @@
+Phase 1: Setup & Planning
+✅ Install React (Vite recommended for speed).
+✅ Install & configure Tailwind CSS.
+✅ Plan the page layout (Navbar, Character Grid, Footer).
+
+Phase 2: Basic UI Structure
+✅ Create a Navbar (Logo + Title).
+✅ Design a Character Card component (Image, Name, Description).
+✅ Use Grid/Flexbox to display multiple character cards.
+✅ Add Hover Effects to cards using Tailwind.
+
+Phase 3: Data Handling
+✅ Store character data in a JSON file or React state.
+✅ (Optional) Fetch character data from an Anime API (Jikan API).
+
+Phase 4: Interactivity & Features
+✅ Add a Search Bar to filter characters.
+✅ Implement a Favorite Button to save favorite characters.
+✅ Make the design responsive for mobile users.
+
+Phase 5: Enhancements & Deployment
+✅ Add Dark Mode support with Tailwind.
+✅ Improve UI with animations (Framer Motion or Tailwind transitions).
+✅ Deploy on Vercel or Netlify.
+
+This roadmap keeps it simple yet scalable. You can start with basic components and add advanced features step by step. Let me know if you need any modifications! 🚀 create a img which includes all these steps written on it
