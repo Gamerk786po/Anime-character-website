@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 // connection funciton
-mongoose.connect("mongodb://localhost:27017/Anime_character");
+mongoose.connect("mongodb://localhost:27017/FavAnimeCharacters");
 //  Schema
 const infoSchema = new mongoose.Schema({
   name: String,
