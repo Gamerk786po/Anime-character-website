@@ -4,11 +4,20 @@ import React from "react";
 interface NavProps {
   setMode: () => void;
   mode: number;
-  searchItem: string
-  setSearchItem: (value: string)=>void
+  searchItem: string;
+  setSearchItem: (value: string) => void;
+  isFavorite: boolean;
+  setIsFavorite: () => void;
 }
 // Nav-bar-component
-const NavBar: React.FC<NavProps> = ({ setMode, mode, searchItem, setSearchItem }) => {
+const NavBar: React.FC<NavProps> = ({
+  setMode,
+  mode,
+  searchItem,
+  setSearchItem,
+  isFavorite,
+  setIsFavorite,
+}) => {
   return (
     // container for nav bar
     <div
@@ -37,15 +46,16 @@ const NavBar: React.FC<NavProps> = ({ setMode, mode, searchItem, setSearchItem }
       {/* Likes character */}
       <button
         aria-label="Favorites"
-        className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-[font-size] duration-200 ease-in-out"
+        className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-all duration-400 ease-in-out"
+        onClick={setIsFavorite}
       >
-        ❤️
+        {isFavorite ? "❤️" : "🤍"}
       </button>
       {/* Dark-light switch */}
       <button
         type="button"
         aria-label="Toggle dark/light mode"
-        className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-[font-size] duration-200 ease-in-out"
+        className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-all duration-400 ease-in-out"
         onClick={setMode}
       >
         {mode === 1 ? "🌙" : "🌞"}

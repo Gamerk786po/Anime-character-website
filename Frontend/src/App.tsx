@@ -5,6 +5,7 @@ import Body from "./components/body";
 function App() {
   // State management for searching
   const [searchItem, setSearchItem] = useState("");
+
   // State management for theme of website
   const [mode, setMode] = useState(() => {
     const storedMode = localStorage.getItem("theme-mode");
@@ -18,7 +19,12 @@ function App() {
   useEffect(() => {
     localStorage.setItem("theme-mode", mode.toString());
   }, [mode]);
-  console.log(searchItem)
+
+  // Statemanagement for favorites
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => setIsFavorite((prev) => !prev);
+
   return (
     // Main container for everything
     <div
@@ -31,8 +37,15 @@ function App() {
         setMode={toggleMode}
         searchItem={searchItem}
         setSearchItem={setSearchItem}
+        isFavorite={isFavorite}
+        setIsFavorite={toggleFavorite}
       />
-      <Body mode={mode} searchItem={searchItem}></Body>
+      <Body
+        mode={mode}
+        searchItem={searchItem}
+        isFavorite={isFavorite}
+        setIsFavorite={toggleFavorite}
+      ></Body>
     </div>
   );
 }
