@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 // route for put req
 app.put("/putAnime", async (req, res) => {
   const { mal_id, name, url, image } = req.body;
-
+  // Saving and updating data in db
   try {
     const updateCreateAnime = await Anime.findOneAndUpdate(
       { mal_id },
