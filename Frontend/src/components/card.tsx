@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id }) => {
       <div
         className={`w-64 h-64 rounded-full shadow-lg border-4 ${
           mode === 1 ? "border-black" : "border-white"
-        } overflow-hidden flex items-end justify-center text-black text-shadow: 1px 1px 2px white; text-center p-4 text-[1.2rem] font-extrabold transition-all ease-in-out duration-200`}
+        } overflow-hidden flex items-end justify-center text-black text-shadow: 1px 1px 2px white; text-center p-4 text-[1.2rem] font-extrabold transition-all ease-in-out duration-500 md:hover:w-70 md:hover:h-70`}
         style={{
           backgroundImage: `url(${img})`,
           backgroundSize: "cover",

@@ -35,13 +35,12 @@ const NavBar: React.FC<NavProps> = ({ setMode, mode, searchItem, setSearchItem }
         } transition-all delay-150 duration-300 ease-in-out`}
       ></input>
       {/* Likes character */}
-      <a
+      <button
         aria-label="Favorites"
-        href="#"
         className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-[font-size] duration-200 ease-in-out"
       >
         ❤️
-      </a>
+      </button>
       {/* Dark-light switch */}
       <button
         type="button"
