@@ -21,9 +21,9 @@ function App() {
   }, [mode]);
 
   // Statemanagement for favorites
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [showFavorite, setShowFavorite] = useState(false);
 
-  const toggleFavorite = () => setIsFavorite((prev) => !prev);
+  const toggleShowFavorite = () => setShowFavorite((prev) => !prev);
 
   return (
     // Main container for everything
@@ -37,14 +37,14 @@ function App() {
         setMode={toggleMode}
         searchItem={searchItem}
         setSearchItem={setSearchItem}
-        isFavorite={isFavorite}
-        setIsFavorite={toggleFavorite}
+        showFavorite={showFavorite}
+        setShowFavorite={toggleShowFavorite}
       />
       <Body
         mode={mode}
         searchItem={searchItem}
-        isFavorite={isFavorite}
-        setIsFavorite={toggleFavorite}
+        showFavorite={showFavorite}
+        setShowFavorite={toggleShowFavorite}
       ></Body>
     </div>
   );

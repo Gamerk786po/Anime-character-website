@@ -6,8 +6,8 @@ interface NavProps {
   mode: number;
   searchItem: string;
   setSearchItem: (value: string) => void;
-  isFavorite: boolean;
-  setIsFavorite: () => void;
+  showFavorite: boolean;
+  setShowFavorite: () => void;
 }
 // Nav-bar-component
 const NavBar: React.FC<NavProps> = ({
@@ -15,8 +15,8 @@ const NavBar: React.FC<NavProps> = ({
   mode,
   searchItem,
   setSearchItem,
-  isFavorite,
-  setIsFavorite,
+  showFavorite,
+  setShowFavorite,
 }) => {
   return (
     // container for nav bar
@@ -47,9 +47,9 @@ const NavBar: React.FC<NavProps> = ({
       <button
         aria-label="Favorites"
         className="h-auto w-auto py-2 px-4 rounded-2xl hover:cursor-pointer border mb-4 md:mb-0 md:hover:text-xl transition-all duration-400 ease-in-out"
-        onClick={setIsFavorite}
+        onClick={setShowFavorite}
       >
-        {isFavorite ? "❤️" : "🤍"}
+        {showFavorite ? "❤️" : "🤍"}
       </button>
       {/* Dark-light switch */}
       <button

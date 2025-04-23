@@ -6,8 +6,8 @@ import ResetButton from "./rest-button";
 interface BodyProps {
   mode: number;
   searchItem: string;
-  isFavorite: boolean;
-  setIsFavorite: () => void;
+  showFavorite: boolean;
+  setShowFavorite: () => void;
 }
 
 // Define the type for character
@@ -24,8 +24,8 @@ interface Character {
 const Body: React.FC<BodyProps> = ({
   mode,
   searchItem,
-  isFavorite,
-  setIsFavorite,
+  showFavorite,
+  setShowFavorite,
 }) => {
   // State management
   const [resetState, setResetState] = useState(false);
