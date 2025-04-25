@@ -33,6 +33,16 @@ app.put("/putAnime", async (req, res) => {
     res.status(500).json({ message: "Error updating data", error });
   }
 });
+// route for get req
+app.get("/getAnime", async (req, res) => {
+  try{
+    const characters = await Anime.find();
+    res.status(200)
+    res.json(characters)
+  }catch(error){
+    res.status(500).json({message: "Error getting data", error})
+  }
+})
 
 // listening port
 app.listen(4000, () => {

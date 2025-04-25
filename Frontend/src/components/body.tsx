@@ -31,6 +31,8 @@ const Body: React.FC<BodyProps> = ({
   const [resetState, setResetState] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
 
+
+  
   // Function for randomization
   const randomArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -70,6 +72,17 @@ const Body: React.FC<BodyProps> = ({
       console.log(`${error}`);
     }
   };
+
+  // Fetching data from mongo db for favorites
+  const getFavoritesData = async () => {
+    try{
+      const res = await fetch(
+        ""
+      )
+    }catch(error){
+      console.log(`${error}`)
+    }
+  }
 
   // UseEffect for fetching data
   useEffect(() => {

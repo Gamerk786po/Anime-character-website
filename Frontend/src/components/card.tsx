@@ -9,8 +9,8 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id }) => {
   return (
     // Main container for the card
     <div className="flex p-0 flex-col">
-      <div className="flex flex-row items-start translate-y-6">
-        <button className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out hover:scale-125 hover:cursor-pointer">
+      <div className="flex flex-row items-start translate-y-10">
+        <button className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer">
           ❤️
         </button>
       </div>
