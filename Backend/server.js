@@ -1,5 +1,6 @@
 //Importing
 const express = require("express");
+const cors = require("cors")
 const Anime = require("./mongoConfig");
 
 // setting an instance for express
@@ -7,6 +8,7 @@ const app = express();
 
 // middleware
 app.use(express.json()); // parser of json
+app.use(cors());
 
 // Testing route
 app.get("/", (req, res) => {

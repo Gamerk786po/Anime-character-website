@@ -31,8 +31,6 @@ const Body: React.FC<BodyProps> = ({
   const [resetState, setResetState] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
 
-
-  
   // Function for randomization
   const randomArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -75,23 +73,38 @@ const Body: React.FC<BodyProps> = ({
 
   // Fetching data from mongo db for favorites
   const getFavoritesData = async () => {
-    try{
-      const res = await fetch(
-        ""
-      )
-    }catch(error){
-      console.log(`${error}`)
+    try {
+      const res = await fetch("http://localhost:4000/getAnime");
+      const json = await res.json();
+      // Mapping MongoDB format to Character[] format
+      const formattedData = json.map((item: any) => ({
+        mal_id: item.mal_id,
+        name: item.name,
+        images: {
+          jpg: {
+            image_url: item.image,
+          },
+        },
+      }));
+      console.log(formattedData)
+      setCharacters(formattedData);
+    } catch (error) {
+      console.log(`${error}`);
     }
-  }
+  };
 
   // UseEffect for fetching data
   useEffect(() => {
-    if (searchItem === "") {
-      getData();
-    } else {
-      getSearchedData();
+    if(showFavorite === true){
+      getFavoritesData()
+    }else{
+      if(searchItem === ""){
+        getData()
+      }else{
+        getSearchedData()
+      }
     }
-  }, [resetState, searchItem]); // 👈 also add searchItem here
+  }, [resetState, searchItem, showFavorite]); // 👈 also add searchItem here
 
   // Return
   return (
