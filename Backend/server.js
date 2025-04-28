@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-// route for put req
+// route for putting anime characters req
 app.put("/putAnime", async (req, res) => {
   const { mal_id, name, url, image } = req.body;
   // Saving and updating data in db
@@ -35,7 +35,7 @@ app.put("/putAnime", async (req, res) => {
     res.status(500).json({ message: "Error updating data", error });
   }
 });
-// route for get req
+// route for getting anime characters req
 app.get("/getAnime", async (req, res) => {
   try{
     const characters = await Anime.find();
@@ -45,6 +45,7 @@ app.get("/getAnime", async (req, res) => {
     res.status(500).json({message: "Error getting data", error})
   }
 })
+// Route for 
 
 // listening port
 app.listen(4000, () => {
