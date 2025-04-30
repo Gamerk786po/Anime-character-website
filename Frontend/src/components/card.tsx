@@ -1,17 +1,33 @@
+import { useState } from "react";
+
+// Card Properties
 interface CardProps {
   name: string;
   img: string;
   mode: number;
   id: number;
+  isFavorite: boolean;
 }
 // Card component
-const Card: React.FC<CardProps> = ({ name, img, mode, id }) => {
+const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
+  // Statemanagement for heart hovering
+  const [heartHover, setHeartHover] = useState(false);
+  // Function for putting data in to monogo db
+  const putData = () => {};
   return (
     // Main container for the card
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
-        <button className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer">
-          ❤️
+        <button
+          className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer"
+          onMouseEnter={() => {
+            setHeartHover(true);
+          }}
+          onMouseLeave={() => {
+            setHeartHover(false);
+          }}
+        >
+          {heartHover ? (isFavorite ? "🤍" : "❤️") : (isFavorite ? "❤️" : "🤍")}
         </button>
       </div>
       <a

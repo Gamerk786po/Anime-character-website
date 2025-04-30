@@ -7,7 +7,6 @@ interface BodyProps {
   mode: number;
   searchItem: string;
   showFavorite: boolean;
-  setShowFavorite: () => void;
 }
 
 // Define the type for character
@@ -21,16 +20,12 @@ interface Character {
   };
 }
 
-const Body: React.FC<BodyProps> = ({
-  mode,
-  searchItem,
-  showFavorite,
-  setShowFavorite,
-}) => {
+const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
   // State management
   const [resetState, setResetState] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
-
+  // statemanagement for isFavorite
+  const [favoriteIds, setFavoriteIds] = useState<Set<number>>(new Set());
   // Function for randomization
   const randomArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
@@ -86,25 +81,45 @@ const Body: React.FC<BodyProps> = ({
           },
         },
       }));
-      console.log(formattedData)
       setCharacters(formattedData);
     } catch (error) {
       console.log(`${error}`);
     }
   };
 
+  // Function for extracting mal_ids of mongo data
+  const extractIds = async () => {
+    try {
+      // Fetching data from the server
+      const data = await fetch("http://localhost:4000/getAnime");
+      // Check if the response is OK
+      if (!data.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const json = await data.json();
+      // Extracting mal_ids
+      const ids = json.map((item: any) => item.mal_id);
+      // Making a Set to remove duplicates
+      const idSet = new Set<number>(ids);
+      setFavoriteIds(idSet);
+    } catch (error) {
+      // Handling any errors that occur during the fetch or processing
+      console.error("Error while extracting mal_ids:", error);
+    }
+  };
   // UseEffect for fetching data
   useEffect(() => {
-    if(showFavorite === true){
-      getFavoritesData()
-    }else{
-      if(searchItem === ""){
-        getData()
-      }else{
-        getSearchedData()
+    if (showFavorite === true) {
+      getFavoritesData();
+    } else {
+      if (searchItem === "") {
+        getData();
+      } else {
+        getSearchedData();
       }
     }
-  }, [resetState, searchItem, showFavorite]); // 👈 also add searchItem here
+    extractIds();
+  }, [resetState, searchItem, showFavorite]);
 
   // Return
   return (
@@ -123,6 +138,7 @@ const Body: React.FC<BodyProps> = ({
             img={char.images.jpg.image_url}
             mode={mode}
             id={char.mal_id}
+            isFavorite={favoriteIds.has(char.mal_id)}
           />
         ))}
       </div>
