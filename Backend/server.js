@@ -1,6 +1,6 @@
 //Importing
 const express = require("express");
-const cors = require("cors")
+const cors = require("cors");
 const Anime = require("./mongoConfig");
 
 // setting an instance for express
@@ -15,6 +15,17 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+// route for getting anime characters req
+app.get("/getAnime", async (req, res) => {
+  try {
+    const characters = await Anime.find();
+    res.status(200);
+    res.json(characters);
+  } catch (error) {
+    res.status(500).json({ message: "Error getting data", error });
+  }
+});
+
 // route for putting anime characters req
 app.put("/putAnime", async (req, res) => {
   const { mal_id, name, url, image } = req.body;
@@ -22,7 +33,7 @@ app.put("/putAnime", async (req, res) => {
   try {
     const updateCreateAnime = await Anime.findOneAndUpdate(
       { mal_id },
-      {name, url, image },
+      { name, url, image },
       { new: true, upsert: true }
     );
 
@@ -35,17 +46,30 @@ app.put("/putAnime", async (req, res) => {
     res.status(500).json({ message: "Error updating data", error });
   }
 });
-// route for getting anime characters req
-app.get("/getAnime", async (req, res) => {
-  try{
-    const characters = await Anime.find();
-    res.status(200)
-    res.json(characters)
-  }catch(error){
-    res.status(500).json({message: "Error getting data", error})
+// Route for deleting anime characters
+app.delete("/delAnime", async (req, res) => {
+  const { mal_id } = req.body;
+
+  if (!mal_id) {
+    return res.status(400).json({ message: "mal_id is required" });
   }
-})
-// Route for 
+
+  try {
+    const delCharacter = await Anime.findOneAndDelete({ mal_id });
+
+    if (!delCharacter) {
+      return res.status(404).json({ message: "Character not found" });
+    }
+
+    res.status(200).json({
+      message: "The character is deleted",
+      data: delCharacter,
+    });
+  } catch (error) {
+    console.log("Error deleting character:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+});
 
 // listening port
 app.listen(4000, () => {
