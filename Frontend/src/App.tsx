@@ -44,7 +44,6 @@ function App() {
         mode={mode}
         searchItem={searchItem}
         showFavorite={showFavorite}
-        setShowFavorite={toggleShowFavorite}
       ></Body>
     </div>
   );

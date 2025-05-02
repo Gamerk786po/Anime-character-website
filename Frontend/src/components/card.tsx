@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Card Properties
 interface CardProps {
   name: string;
   img: string;
@@ -8,28 +7,49 @@ interface CardProps {
   id: number;
   isFavorite: boolean;
 }
-// Card component
+
 const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
-  // Statemanagement for heart hovering
+  // heart hovering state managemnet
   const [heartHover, setHeartHover] = useState(false);
-  // Function for putting data in to monogo db
-  const putData = () => {};
+
+  // Favorited state management
+  const [favorited, setFavorited] = useState(isFavorite);
+  // function for putting data in mongo db favorites
+  const putData = () => {
+    setFavorited(true);
+    fetch("http://localhost:4000/putAnime", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mal_id: id,
+        name: name,
+        url: `https://myanimelist.net/character/${id}`,
+        image: img,
+      }),
+    }).catch((error) => {
+      console.error("Failed to favorite:", error);
+      setFavorited(false);
+    });
+  };
+  // function for deleting data from mongo db favorites
+  const delData = () => {
+    setFavorited(false);
+  }
   return (
-    // Main container for the card
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
         <button
           className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer"
-          onMouseEnter={() => {
-            setHeartHover(true);
-          }}
-          onMouseLeave={() => {
-            setHeartHover(false);
-          }}
+          onMouseEnter={() => setHeartHover(true)}
+          onMouseLeave={() => setHeartHover(false)}
+          onClick={putData}
         >
-          {heartHover ? (isFavorite ? "🤍" : "❤️") : (isFavorite ? "❤️" : "🤍")}
+          {heartHover ? (favorited ? "🤍" : "❤️") : favorited ? "❤️" : "🤍"}
         </button>
       </div>
+
       <a
         href={`https://myanimelist.net/character/${id}`}
         target="_blank"
@@ -46,7 +66,6 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
             backgroundRepeat: "no-repeat",
           }}
         >
-          {/* Container for information */}
           <div className="bg-white bg-opacity-80 w-full px-2 py-1 text-center text-black text-[1rem] font-bold break-words">
             <p className="leading-tight">{name}</p>
           </div>
@@ -55,4 +74,5 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
     </div>
   );
 };
+
 export default Card;
