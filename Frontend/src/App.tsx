@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "./components/nav-bar";
 import Body from "./components/body";
+import Footer from "./components/footer";
 
 function App() {
   // State management for searching
@@ -32,6 +33,7 @@ function App() {
         mode === 1 ? "bg-white text-black" : "bg-gray-800 text-white"
       } transition-all delay-150 duration-300 ease-in-out`}
     >
+      {/* Nav Bar */}
       <NavBar
         mode={mode}
         setMode={toggleMode}
@@ -40,11 +42,14 @@ function App() {
         showFavorite={showFavorite}
         setShowFavorite={toggleShowFavorite}
       />
+      {/* Body */}
       <Body
         mode={mode}
         searchItem={searchItem}
         showFavorite={showFavorite}
       ></Body>
+      {/* Footer */}
+      <Footer mode={mode}></Footer>
     </div>
   );
 }
