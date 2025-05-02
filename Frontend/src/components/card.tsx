@@ -15,28 +15,62 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // Favorited state management
   const [favorited, setFavorited] = useState(isFavorite);
   // function for putting data in mongo db favorites
-  const putData = () => {
+  const putData = async () => {
     setFavorited(true);
-    fetch("http://localhost:4000/putAnime", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        mal_id: id,
-        name: name,
-        url: `https://myanimelist.net/character/${id}`,
-        image: img,
-      }),
-    }).catch((error) => {
-      console.error("Failed to favorite:", error);
+
+    try {
+      const response = await fetch("http://localhost:4000/putAnime", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mal_id: id,
+          name: name,
+          url: `https://myanimelist.net/character/${id}`,
+          image: img,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Server responded with error:", errorData.message);
+        setFavorited(false);
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Success:", result.message);
+    } catch (error) {
+      console.error("Failed to favorite (network or other error):", error);
       setFavorited(false);
-    });
+    }
   };
   // function for deleting data from mongo db favorites
-  const delData = () => {
+  const delData = async () => {
     setFavorited(false);
-  }
+
+    try {
+      const response = await fetch("http://localhost:4000/delAnime", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mal_id: id }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Server responded with error:", errorData.message);
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Success:", result.message);
+    } catch (error) {
+      console.error("Failed to delete:", error);
+    }
+  };
   return (
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
@@ -44,7 +78,14 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
           className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer"
           onMouseEnter={() => setHeartHover(true)}
           onMouseLeave={() => setHeartHover(false)}
-          onClick={putData}
+          onClick={()=>{
+            if(favorited === true){
+              delData()
+            }
+            else{
+              putData()
+            }
+          }}
         >
           {heartHover ? (favorited ? "🤍" : "❤️") : favorited ? "❤️" : "🤍"}
         </button>
