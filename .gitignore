@@ -16,3 +16,6 @@ frontend/.DS_Store
 *.log
 .DS_Store
 Thumbs.db
+
+/build
+/node_modules
