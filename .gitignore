@@ -17,5 +17,4 @@ frontend/.DS_Store
 .DS_Store
 Thumbs.db
 
-/build
-/node_modules
+Frontend/dist/
