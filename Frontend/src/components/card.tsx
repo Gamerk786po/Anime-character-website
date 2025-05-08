@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
     setFavorited(true);
 
     try {
-      const response = await fetch("http://localhost:4000/putAnime", {
+      const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/putAnime", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
     setFavorited(false);
 
     try {
-      const response = await fetch("http://localhost:4000/delAnime", {
+      const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/delAnime", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

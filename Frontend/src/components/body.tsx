@@ -69,7 +69,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
   // Fetching data from mongo db for favorites
   const getFavoritesData = async () => {
     try {
-      const res = await fetch("http://localhost:4000/getAnime");
+      const res = await fetch("https://anime-character-website-production-9bc8.up.railway.app/getAnime");
       const json = await res.json();
       // Mapping MongoDB format to Character[] format
       const formattedData = json.map((item: any) => ({
@@ -91,7 +91,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
   const extractIds = async () => {
     try {
       // Fetching data from the server
-      const data = await fetch("http://localhost:4000/getAnime");
+      const data = await fetch("https://anime-character-website-production-9bc8.up.railway.app/getAnime");
       // Check if the response is OK
       if (!data.ok) {
         throw new Error("Failed to fetch data");
