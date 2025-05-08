@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 // connection funciton
-mongoose.connect("mongodb://localhost:27017/FavAnimeCharacters");
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB Atlas connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 //  Schema
 const infoSchema = new mongoose.Schema(
   {
@@ -9,7 +13,7 @@ const infoSchema = new mongoose.Schema(
     url: String,
     image: String,
   },
-  { collection: "Informations" }
+  { collection: "favCharacters" }
 );
-const Anime = new mongoose.model("Informations", infoSchema);
+const Anime = new mongoose.model("favCharacters", infoSchema);
 module.exports = Anime;
