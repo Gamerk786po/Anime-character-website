@@ -88,6 +88,13 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
               putData();
             }
           }}
+          onTouchStart={() => {
+            if (favorited === true) {
+              delData();
+            } else {
+              putData();
+            }
+          }}
           onMouseEnter={() => setHeartHover(true)}
           onMouseLeave={() => setHeartHover(false)}
         >
