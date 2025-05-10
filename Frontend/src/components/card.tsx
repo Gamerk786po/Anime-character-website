@@ -16,8 +16,6 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   const [favorited, setFavorited] = useState(isFavorite);
   // function for putting data in mongo db favorites
   const putData = async () => {
-    setFavorited(true);
-
     try {
       const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/putAnime", {
         method: "PUT",
@@ -40,6 +38,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
       }
 
       const result = await response.json();
+      setFavorited(true);
       console.log("Success:", result.message);
     } catch (error) {
       console.error("Failed to favorite (network or other error):", error);
@@ -48,8 +47,6 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   };
   // function for deleting data from mongo db favorites
   const delData = async () => {
-    setFavorited(false);
-
     try {
       const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/delAnime", {
         method: "DELETE",
@@ -58,17 +55,19 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
         },
         body: JSON.stringify({ mal_id: id }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Server responded with error:", errorData.message);
+        setFavorited(true);
         return;
       }
 
       const result = await response.json();
       console.log("Success:", result.message);
+      setFavorited(false);
     } catch (error) {
       console.error("Failed to delete:", error);
+      setFavorited(true);
     }
   };
   return (
