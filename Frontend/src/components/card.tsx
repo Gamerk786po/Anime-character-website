@@ -14,6 +14,11 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
 
   // Favorited state management
   const [favorited, setFavorited] = useState(isFavorite);
+
+  // if the window is touchable or not
+  const isTouchDevice =
+    typeof window !== "undefined" && "ontouchstart" in window;
+
   // function for putting data in mongo db favorites
   const putData = async () => {
     try {
@@ -95,8 +100,8 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
               putData();
             }
           }}
-          onMouseEnter={() => setHeartHover(true)}
-          onMouseLeave={() => setHeartHover(false)}
+          onMouseEnter={() => !isTouchDevice && setHeartHover(true)}
+          onMouseLeave={() => !isTouchDevice && setHeartHover(false)}
         >
           {heartHover ? (favorited ? "🤍" : "❤️") : favorited ? "❤️" : "🤍"}
         </div>
