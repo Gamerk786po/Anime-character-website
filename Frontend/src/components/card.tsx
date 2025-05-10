@@ -17,18 +17,21 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // function for putting data in mongo db favorites
   const putData = async () => {
     try {
-      const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/putAnime", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mal_id: id,
-          name: name,
-          url: `https://myanimelist.net/character/${id}`,
-          image: img,
-        }),
-      });
+      const response = await fetch(
+        "https://anime-character-website-production-9bc8.up.railway.app/putAnime",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mal_id: id,
+            name: name,
+            url: `https://myanimelist.net/character/${id}`,
+            image: img,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -48,13 +51,16 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // function for deleting data from mongo db favorites
   const delData = async () => {
     try {
-      const response = await fetch("https://anime-character-website-production-9bc8.up.railway.app/delAnime", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mal_id: id }),
-      });
+      const response = await fetch(
+        "https://anime-character-website-production-9bc8.up.railway.app/delAnime",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mal_id: id }),
+        }
+      );
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Server responded with error:", errorData.message);
@@ -73,21 +79,20 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   return (
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
-        <button
+        <div
           className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer"
-          onMouseEnter={() => setHeartHover(true)}
-          onMouseLeave={() => setHeartHover(false)}
-          onClick={()=>{
-            if(favorited === true){
-              delData()
-            }
-            else{
-              putData()
+          onClick={() => {
+            if (favorited === true) {
+              delData();
+            } else {
+              putData();
             }
           }}
+          onMouseEnter={() => setHeartHover(true)}
+          onMouseLeave={() => setHeartHover(false)}
         >
           {heartHover ? (favorited ? "🤍" : "❤️") : favorited ? "❤️" : "🤍"}
-        </button>
+        </div>
       </div>
 
       <a
