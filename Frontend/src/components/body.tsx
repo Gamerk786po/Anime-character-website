@@ -19,6 +19,12 @@ interface Character {
     };
   };
 }
+// define favorite character from db
+interface FavoriteCharacterFromDB {
+  mal_id: number;
+  name: string;
+  image: string;
+}
 
 const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
   // State management
@@ -72,7 +78,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
       const res = await fetch("https://anime-character-website-production-9bc8.up.railway.app/getAnime");
       const json = await res.json();
       // Mapping MongoDB format to Character[] format
-      const formattedData = json.map((item: any) => ({
+      const formattedData = json.map((item: FavoriteCharacterFromDB) => ({
         mal_id: item.mal_id,
         name: item.name,
         images: {
@@ -98,7 +104,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
       }
       const json = await data.json();
       // Extracting mal_ids
-      const ids = json.map((item: any) => item.mal_id);
+      const ids = (json as FavoriteCharacterFromDB[]).map(item => item.mal_id);
       // Making a Set to remove duplicates
       const idSet = new Set<number>(ids);
       setFavoriteIds(idSet);
@@ -108,6 +114,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
     }
   };
   // UseEffect for fetching data
+  
   useEffect(() => {
     if (showFavorite === true) {
       getFavoritesData();
@@ -119,6 +126,7 @@ const Body: React.FC<BodyProps> = ({ mode, searchItem, showFavorite }) => {
       }
     }
     extractIds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetState, searchItem, showFavorite]);
 
   // Return
