@@ -27,6 +27,7 @@ const Footer: React.FC<FooterProps> = ({ mode }) => {
         <div className="flex justify-around">
         {contacts.map((contact) => (
           <SocialContact
+            key={contact.name}
             name={contact.name}
             url={contact.url}
           />
