@@ -22,21 +22,18 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // function for putting data in mongo db favorites
   const putData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:4000/putAnime",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            mal_id: id,
-            name: name,
-            url: `https://myanimelist.net/character/${id}`,
-            image: img,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:4000/putAnime", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mal_id: id,
+          name: name,
+          url: `https://myanimelist.net/character/${id}`,
+          image: img,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -56,16 +53,13 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // function for deleting data from mongo db favorites
   const delData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:4000/delAnime",
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ mal_id: id }),
-        }
-      );
+      const response = await fetch("http://localhost:4000/delAnime", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mal_id: id }),
+      });
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Server responded with error:", errorData.message);
@@ -84,17 +78,17 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   return (
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
-        <div
-          className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer"
+        <button
+          className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer select-none focus:outline-none"
           onClick={() => {
-            if (favorited === true) {
+            if (favorited) {
               delData();
             } else {
               putData();
             }
           }}
           onTouchStart={() => {
-            if (favorited === true) {
+            if (favorited) {
               delData();
             } else {
               putData();
@@ -104,7 +98,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
           onMouseLeave={() => !isTouchDevice && setHeartHover(false)}
         >
           {heartHover ? (favorited ? "🤍" : "❤️") : favorited ? "❤️" : "🤍"}
-        </div>
+        </button>
       </div>
 
       <a
