@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   const putData = async () => {
     try {
       const response = await fetch(
-        "https://anime-character-website-production-9bc8.up.railway.app/putAnime",
+        "http://localhost:4000/putAnime",
         {
           method: "PUT",
           headers: {
@@ -57,7 +57,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   const delData = async () => {
     try {
       const response = await fetch(
-        "https://anime-character-website-production-9bc8.up.railway.app/delAnime",
+        "http://localhost:4000/delAnime",
         {
           method: "DELETE",
           headers: {
