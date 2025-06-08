@@ -91,7 +91,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
         <button
           className={`h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out hover:cursor-pointer select-none focus:outline-none ${
             heartClicked
-              ? "motion-scale-in-[0.53] motion-rotate-in-[-173deg] motion-duration-[0.73s]/rotate"
+              ? ""
               : ""
           }`}
           onClick={() => {
