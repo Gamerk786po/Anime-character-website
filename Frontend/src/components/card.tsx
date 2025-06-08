@@ -15,6 +15,10 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
   // Favorited state management
   const [favorited, setFavorited] = useState(isFavorite);
 
+  // Heart click state management
+  const [heartClicked, setHeartClicked] = useState(false);
+
+
   // if the window is touchable or not
   const isTouchDevice =
     typeof window !== "undefined" && "ontouchstart" in window;
@@ -75,17 +79,25 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
       setFavorited(true);
     }
   };
+  // Function for handling heart click
+  const heartClick = () => {
+    setHeartClicked(true);
+    setTimeout(()=>{
+      setHeartClicked(false);
+    }, 1000)
+  };
   return (
     <div className="flex p-0 flex-col">
       <div className="flex flex-row items-start translate-y-10">
         <button
-          className="h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out md:hover:scale-125 hover:cursor-pointer select-none focus:outline-none"
+          className={`h-auto w-auto rounded-xl transition-transform duration-300 ease-in-out hover:cursor-pointer select-none focus:outline-none ${heartClicked ? "motion-preset-bounce" : ""}`}
           onClick={() => {
             if (favorited) {
               delData();
             } else {
               putData();
             }
+            heartClick()
           }}
           onTouchStart={() => {
             if (favorited) {
@@ -93,6 +105,7 @@ const Card: React.FC<CardProps> = ({ name, img, mode, id, isFavorite }) => {
             } else {
               putData();
             }
+            heartClick()
           }}
           onMouseEnter={() => !isTouchDevice && setHeartHover(true)}
           onMouseLeave={() => !isTouchDevice && setHeartHover(false)}
